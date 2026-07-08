@@ -1,0 +1,61 @@
+name: FastKV CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: "GCC - Release Build"
+            cc: gcc
+            cxx: g++
+            build_type: Release
+            sanitize: none
+          - name: "Clang - Debug Build"
+            cc: clang
+            cxx: clang++
+            build_type: Debug
+            sanitize: none
+          - name: "Clang - Address/UB Sanitizer"
+            cc: clang
+            cxx: clang++
+            build_type: Debug
+            sanitize: address
+          - name: "Clang - Thread Sanitizer"
+            cc: clang
+            cxx: clang++
+            build_type: Debug
+            sanitize: thread
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install Build Tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake build-essential
+
+    - name: Configure CMake
+      run: |
+        cmake -S . -B build \
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+          -DFASTKV_SANITIZE=${{ matrix.sanitize }}
+      env:
+        CC: ${{ matrix.cc }}
+        CXX: ${{ matrix.cxx }}
+
+    - name: Build Targets
+      run: cmake --build build --parallel $(nproc)
+
+    - name: Run Tests
+      working-directory: build
+      run: ctest --output-on-failure

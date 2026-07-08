@@ -1,0 +1,29 @@
+# Build directories
+build/
+bin/
+lib/
+out/
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# CMake user files
+CMakeUserPresets.json
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+# Testing and profiling
+*.gcda
+*.gcno
+*.gcov
+valgrind-out.txt
+gmon.out
