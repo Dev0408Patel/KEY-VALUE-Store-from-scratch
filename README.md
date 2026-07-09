@@ -28,7 +28,7 @@ Instead of relying on high-level libraries, FastKV implements custom low-level s
 
 ## Implemented Features
 
-* **インターフェース Interface Design**: A unified polymorphism contract (`IKVStore`) letting you hot-swap database engines.
+* **Interface Design**: A unified polymorphism contract (`IKVStore`) letting you hot-swap database engines.
 * **Mutex-Striped Backend**: Hashes the keyspace to route operations to 16 independent shards, each guarded by a `std::shared_mutex` for concurrent read access and exclusive write access.
 * **Lock-Free Backend**: Bucket lists utilizing atomic pointers and Compare-and-Swap (CAS) update loops, completely eliminating lock contention.
 * **Hazard Pointers**: Safe Memory Reclamation (SMR) tracking what nodes reading threads are viewing, preventing Use-After-Free and solving the ABA problem in lock-free operations.
