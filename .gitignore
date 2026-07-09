@@ -10,6 +10,7 @@ out/
 *.swp
 *.swo
 .DS_Store
+.cache/
 
 # CMake user files
 CMakeUserPresets.json
