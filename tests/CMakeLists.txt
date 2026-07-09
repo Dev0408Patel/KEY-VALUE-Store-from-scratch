@@ -10,5 +10,7 @@ target_link_libraries(fastkv_tests
         gtest_main
 )
 
+target_compile_options(fastkv_tests PRIVATE ${FASTKV_WARNINGS})
+
 # Register the target executable with CTest framework
 add_test(NAME FastKVTests COMMAND fastkv_tests)

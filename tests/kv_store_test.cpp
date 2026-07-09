@@ -6,6 +6,8 @@
 #include <chrono>
 #include <algorithm>
 #include <iostream>
+#include <utility>
+#include <ratio>
 #include "fastkv/kv_store.h"
 #include "fastkv/mutex_kv_store.h"
 #include "fastkv/lock_free_kv_store.h"
@@ -174,9 +176,9 @@ void RunStressTest(fastkv::IKVStore& store, const std::string& name) {
 
     std::sort(flat_latencies.begin(), flat_latencies.end());
 
-    size_t p50_idx = static_cast<size_t>(flat_latencies.size() * 0.50);
-    size_t p90_idx = static_cast<size_t>(flat_latencies.size() * 0.90);
-    size_t p99_idx = static_cast<size_t>(flat_latencies.size() * 0.99);
+    size_t p50_idx = static_cast<size_t>(static_cast<double>(flat_latencies.size()) * 0.50);
+    size_t p90_idx = static_cast<size_t>(static_cast<double>(flat_latencies.size()) * 0.90);
+    size_t p99_idx = static_cast<size_t>(static_cast<double>(flat_latencies.size()) * 0.99);
 
     std::cout << "\n----------------------------------------\n";
     std::cout << "Latency Benchmark for " << name << ":\n";
@@ -250,7 +252,7 @@ TEST(LockFreeKVStoreTest, P99LatencyProof) {
     }
 
     std::sort(latencies.begin(), latencies.end());
-    size_t p99_idx = static_cast<size_t>(latencies.size() * 0.99);
+    size_t p99_idx = static_cast<size_t>(static_cast<double>(latencies.size()) * 0.99);
     double p99_val = latencies[p99_idx];
 
     // Mathematical Proof: Check that at least 99% of samples are <= the p99 threshold
