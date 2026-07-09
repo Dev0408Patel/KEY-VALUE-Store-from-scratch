@@ -6,6 +6,8 @@
 #include <chrono>
 #include <algorithm>
 #include <iostream>
+#include <utility>
+#include <ratio>
 #include "fastkv/kv_store.h"
 #include "fastkv/mutex_kv_store.h"
 #include "fastkv/lock_free_kv_store.h"
