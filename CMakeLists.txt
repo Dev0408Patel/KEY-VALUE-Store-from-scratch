@@ -15,8 +15,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # Setup Compiler Warning Flags
+set(FASTKV_WARNINGS "")
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
-    add_compile_options(
+    set(FASTKV_WARNINGS
         -Wall
         -Wextra
         -Wpedantic
